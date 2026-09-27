@@ -1,5 +1,6 @@
 import Header from "./components/Header/Header";
 import PropertyCard from "./components/PropertyCard/PropertyCard";
+import Card from "./components/Card/Card";
 
 //Sample Data
 const propertiesData = [
@@ -30,21 +31,25 @@ const propertiesData = [
 ];
 
 function App(){
+    const selectedCategory = "House";
+    const filteredProperties = propertiesData.filter(
+        (item) => item.category === selectedCategory
+    );
     return(
-     <div>
+     <div className="app-container">
         <Header/>
-        <main>
-            {propertiesData.map((property)=>(
-               <PropertyCard
-               key={property.id}
-               title={property.title}
-               price={property.price}
-               location={property.location}
-               bedrooms={property.bedrooms}
-               image={property.image}
-               /> 
+        <h2>Showing:{selectedCategory}s</h2>
+        {filteredProperties.length === 0 ?(
+            <p className="no-results">No properties found in this category.</p>
+        ):(
+        <main className="property-list">
+            {filteredProperties.map((property)=>(
+               <Card key={property.id}>
+                <PropertyCard {...property}/>
+               </Card>
             ))}
         </main>
+        )}
      </div>
     );
 }
