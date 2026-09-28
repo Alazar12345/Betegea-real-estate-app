@@ -1,3 +1,4 @@
+import { useState } from "react";
 import PropTypes from "prop-types";
 function PropertyCard({
     title,
@@ -6,9 +7,10 @@ function PropertyCard({
     bedrooms,
     isFeatured,
     isAvailable,
-    currency="ETB",
-    image
+    currency="",
+    image,
 }){
+    const[isSaved, setIsSaved] = useState(false);
 return(
  <div>
     
@@ -18,10 +20,11 @@ return(
         <h3>{title}</h3>
         <span className={`status${isAvailable?"avaialble":"sold"}`}>{isAvailable ? "Available" :"Sold Out"}</span>
         <p className="price">
-            {`currency === "ETB"? "ETB" :${currency}`}
+            {currency === "ETB"? "ETB" :`${currency} `}
             ${price.toLocaleString("en-ET", { style: "currency", currency: "ETB" })}</p>
         <p className="location">{location}</p>
-        <span classname="beds">{bedrooms}Beds</span>
+        <span className="beds">{bedrooms}Beds</span>
+        <button className={`save-btn ${isSaved ? "Saved" :""}`} onClick={() => setIsSaved(!isSaved)}>{isSaved?"Saved to Favorites" :"Save Property"}</button>
     </div>
  </div>
 );
